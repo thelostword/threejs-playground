@@ -1,31 +1,32 @@
 /*
  * @Author: losting
  * @Date: 2022-06-10 09:58:20
- * @LastEditTime: 2022-06-10 09:58:21
- * @LastEditors: losting
+ * @LastEditTime: 2022-11-15 18:12:14
+ * @LastEditors: thelostword
  * @Description:
- * @FilePath: \vite-vue3-template\src\router\routes.js
+ * @FilePath: \threejs-playground\src\router\routes.js
  */
-import Layout from '@/layout/index.vue';
-
 const routes = [
   {
     path: '/',
-    component: Layout,
-    redirect: '/dashboard',
+    component: () => import('@/views/index.vue'),
     meta: {
       title: '首页',
     },
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index.vue'),
-        meta: {
-          title: '工作台',
-        },
-      },
-    ],
+  },
+  {
+    path: '/1',
+    component: () => import('@/views/1.基础.vue'),
+    meta: {
+      title: '1.基础',
+    },
+  },
+  {
+    path: '/2',
+    component: () => import('@/views/2.响应式.vue'),
+    meta: {
+      title: '2.响应式',
+    },
   },
 ];
 
