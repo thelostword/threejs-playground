@@ -1,7 +1,7 @@
 /*
  * @Author: losting
  * @Date: 2022-06-10 09:58:20
- * @LastEditTime: 2022-11-16 17:51:26
+ * @LastEditTime: 2022-11-17 15:22:28
  * @LastEditors: thelostword
  * @Description:
  * @FilePath: \threejs-playground\src\router\routes.js
@@ -75,6 +75,13 @@ const routes = [
     component: () => import('@/views/11.加载.GLTF文件.vue'),
     meta: {
       title: '11.加载.GLTF文件',
+    },
+  },
+  {
+    path: '/12',
+    component: () => import('@/views/12.背景与天空盒.vue'),
+    meta: {
+      title: '12.背景与天空盒',
     },
   },
 ];
