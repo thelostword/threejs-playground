@@ -1,9 +1,9 @@
 <!--
  * @Author: thelostword
- * @Date: 2022-11-15 18:10:23
+ * @Date: 2022-11-16 11:31:00
  * @LastEditors: thelostword
- * @LastEditTime: 2022-11-16 09:46:38
- * @FilePath: \threejs-playground\src\views\2.响应式.vue
+ * @LastEditTime: 2022-11-16 12:07:09
+ * @FilePath: \threejs-playground\src\views\4.场景图.vue
 -->
 <template>
   <canvas id="canvas" />
@@ -22,49 +22,62 @@ function main() {
   const fov = 75;
   const aspect = 2; // 相机默认值
   const near = 0.1;
-  const far = 5;
+  const far = 100;
 
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.z = 2;
+  camera.position.set(0, 50, 0);
+  camera.up.set(0, 0, 1);
+  camera.lookAt(0, 0, 0);
 
   // 创建一个场景(Scene)
   const scene = new THREE.Scene();
 
-  // 创建一个包含盒子信息的立方几何体(BoxGeometry)
-  const boxWidth = 1;
-  const boxHeight = 1;
-  const boxDepth = 1;
-  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+  const objects = [];
 
-  // 创建一个基本的材质
-  // const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 });
+  // 星球公共几何体
+  const sphereGeometry = new THREE.SphereGeometry(8, 8, 8);
 
-  // 创建一个网格(Mesh)
-  function makeInstance(_geometry, color, x) {
-    const _material = new THREE.MeshPhongMaterial({ color });
+  // 太阳系
+  const solarSystem = new THREE.Object3D();
+  scene.add(solarSystem);
+  objects.push(solarSystem);
 
-    const cube = new THREE.Mesh(_geometry, _material);
-    scene.add(cube);
+  // 太阳
+  const sunMaterial = new THREE.MeshPhongMaterial({ emissive: 0xffff00 });
+  const sunMesh = new THREE.Mesh(sphereGeometry, sunMaterial);
 
-    cube.position.x = x;
+  solarSystem.add(sunMesh);
+  objects.push(sunMesh);
 
-    return cube;
-  }
+  // 地月系统
+  const moonOrbit = new THREE.Object3D();
+  moonOrbit.position.x = 25;
 
-  const cubes = [
-    makeInstance(geometry, 0x44aa88, 0),
-    makeInstance(geometry, 0x8844aa, -2),
-    makeInstance(geometry, 0xaa8844, 2),
-  ];
+  solarSystem.add(moonOrbit);
+  objects.push(moonOrbit);
 
-  // 将网格添加到场景中
-  // scene.add(cube);
+  // 地球
+  const earthMaterial = new THREE.MeshPhongMaterial({ color: 0x2233ff, emissive: 0x112244 });
+  const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
+
+  earthMesh.scale.set(0.3, 0.3, 0.3);
+
+  moonOrbit.add(earthMesh);
+
+  // 月亮
+  const moonMaterial = new THREE.MeshPhongMaterial({ color: 0x888888, emissive: 0x222222 });
+  const moobMesh = new THREE.Mesh(sphereGeometry, moonMaterial);
+
+  moobMesh.scale.set(0.1, 0.1, 0.1);
+  moobMesh.position.x = 5;
+
+  moonOrbit.add(moobMesh);
 
   // 添加些光照
   const color = 0xFFFFFF;
-  const intensity = 1;
-  const light = new THREE.DirectionalLight(color, intensity);
-  light.position.set(-1, 2, 4);
+  const intensity = 2;
+  const light = new THREE.PointLight(color, intensity);
+  light.position.set(0, 0, 0);
   scene.add(light);
 
   // 将场景和摄像机传递给渲染器来渲染出整个场景
@@ -82,11 +95,8 @@ function main() {
   }
 
   function render(time) {
-    cubes.forEach((cube, ndx) => {
-      const speed = 1 + ndx * 0.2;
-      const rot = (time / 1000) * speed;
-      cube.rotation.x = rot;
-      cube.rotation.y = rot;
+    objects.forEach((obj) => {
+      obj.rotation.y = time / 1000;
     });
 
     if (resizeRendererToDisplaySize()) {

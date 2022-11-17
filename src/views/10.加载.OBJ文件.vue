@@ -1,9 +1,9 @@
 <!--
  * @Author: thelostword
- * @Date: 2022-11-15 18:10:23
+ * @Date: 2022-11-16 10:56:42
  * @LastEditors: thelostword
- * @LastEditTime: 2022-11-16 09:46:38
- * @FilePath: \threejs-playground\src\views\2.响应式.vue
+ * @LastEditTime: 2022-11-16 17:41:40
+ * @FilePath: \threejs-playground\src\views\10.加载.OBJ文件.vue
 -->
 <template>
   <canvas id="canvas" />
@@ -12,6 +12,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 function main() {
   const canvas = document.querySelector('#canvas');
@@ -20,45 +21,32 @@ function main() {
 
   // 透视摄像机(PerspectiveCamera)
   const fov = 75;
-  const aspect = 2; // 相机默认值
+  const aspect = 2; // canvas 的默认宽高 300:150
   const near = 0.1;
   const far = 5;
 
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   camera.position.z = 2;
 
+  const controls = new OrbitControls(camera, canvas);
+  controls.update();
+
   // 创建一个场景(Scene)
   const scene = new THREE.Scene();
-
-  // 创建一个包含盒子信息的立方几何体(BoxGeometry)
-  const boxWidth = 1;
-  const boxHeight = 1;
-  const boxDepth = 1;
-  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-
-  // 创建一个基本的材质
-  // const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 });
-
-  // 创建一个网格(Mesh)
-  function makeInstance(_geometry, color, x) {
-    const _material = new THREE.MeshPhongMaterial({ color });
-
-    const cube = new THREE.Mesh(_geometry, _material);
-    scene.add(cube);
-
-    cube.position.x = x;
-
-    return cube;
+  {
+    const near = 1;
+    const far = 2;
+    const color = 'lightblue';
+    scene.fog = new THREE.Fog(color, near, far);
+    scene.background = new THREE.Color(color);
   }
 
-  const cubes = [
-    makeInstance(geometry, 0x44aa88, 0),
-    makeInstance(geometry, 0x8844aa, -2),
-    makeInstance(geometry, 0xaa8844, 2),
-  ];
-
-  // 将网格添加到场景中
-  // scene.add(cube);
+  const cubeSize = 1;
+  const cubeGeo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+  const cubeMat = new THREE.MeshPhongMaterial({ color: 0x8844aa });
+  const cube = new THREE.Mesh(cubeGeo, cubeMat);
+  // cube.position.set(0, 0, 0);
+  scene.add(cube);
 
   // 添加些光照
   const color = 0xFFFFFF;
@@ -82,13 +70,8 @@ function main() {
   }
 
   function render(time) {
-    cubes.forEach((cube, ndx) => {
-      const speed = 1 + ndx * 0.2;
-      const rot = (time / 1000) * speed;
-      cube.rotation.x = rot;
-      cube.rotation.y = rot;
-    });
-
+    cube.rotation.x = time / 5000;
+    cube.rotation.y = time / 5000;
     if (resizeRendererToDisplaySize()) {
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();

@@ -1,10 +1,10 @@
 /*
  * @Author: losting
  * @Date: 2022-05-18 09:31:13
- * @LastEditTime: 2022-11-10 15:09:45
+ * @LastEditTime: 2022-11-17 15:10:58
  * @LastEditors: thelostword
  * @Description:
- * @FilePath: \vite-vue3-template\.eslintrc.js
+ * @FilePath: \threejs-playground\.eslintrc.js
  */
 module.exports = {
   env: {
@@ -38,11 +38,15 @@ module.exports = {
     'vue/multi-word-component-names': 0,
     'import/prefer-default-export': 0,
     'no-console': 0,
-    'no-param-reassign': ['error', { props: false }],
     'no-return-await': 0,
     'no-void': 0,
     'import/export': 0,
     'no-underscore-dangle': 0,
     'no-new': 0,
+    'no-bitwise': 0,
+    'no-shadow': 0,
+    'no-restricted-syntax': 0,
+    'no-param-reassign': 0,
+    'import/extensions': 0,
   },
 };

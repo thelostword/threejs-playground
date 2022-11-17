@@ -1,7 +1,7 @@
 /*
  * @Author: losting
  * @Date: 2022-06-10 09:58:20
- * @LastEditTime: 2022-11-15 18:12:14
+ * @LastEditTime: 2022-11-16 17:51:26
  * @LastEditors: thelostword
  * @Description:
  * @FilePath: \threejs-playground\src\router\routes.js
@@ -26,6 +26,55 @@ const routes = [
     component: () => import('@/views/2.响应式.vue'),
     meta: {
       title: '2.响应式',
+    },
+  },
+  {
+    path: '/3',
+    component: () => import('@/views/3.图元.vue'),
+    meta: {
+      title: '3.图元',
+    },
+  },
+  {
+    path: '/4',
+    component: () => import('@/views/4.场景图.vue'),
+    meta: {
+      title: '4.场景图',
+    },
+  },
+  {
+    path: '/5',
+    component: () => import('@/views/5.纹理.vue'),
+    meta: {
+      title: '5.纹理',
+    },
+  },
+  {
+    path: '/6',
+    component: () => import('@/views/6.光照.vue'),
+    meta: {
+      title: '6.光照',
+    },
+  },
+  {
+    path: '/7',
+    component: () => import('@/views/7.雾.vue'),
+    meta: {
+      title: '7.雾',
+    },
+  },
+  {
+    path: '/10',
+    component: () => import('@/views/10.加载.OBJ文件.vue'),
+    meta: {
+      title: '10.加载.OBJ文件',
+    },
+  },
+  {
+    path: '/11',
+    component: () => import('@/views/11.加载.GLTF文件.vue'),
+    meta: {
+      title: '11.加载.GLTF文件',
     },
   },
 ];

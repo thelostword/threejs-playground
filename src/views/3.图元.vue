@@ -1,9 +1,9 @@
 <!--
  * @Author: thelostword
- * @Date: 2022-11-15 18:10:23
+ * @Date: 2022-11-16 10:56:42
  * @LastEditors: thelostword
- * @LastEditTime: 2022-11-16 09:46:38
- * @FilePath: \threejs-playground\src\views\2.响应式.vue
+ * @LastEditTime: 2022-11-16 11:25:53
+ * @FilePath: \threejs-playground\src\views\3.图元.vue
 -->
 <template>
   <canvas id="canvas" />
@@ -22,19 +22,19 @@ function main() {
   const fov = 75;
   const aspect = 2; // 相机默认值
   const near = 0.1;
-  const far = 5;
+  const far = 100;
 
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.z = 2;
+  camera.position.z = 40;
 
   // 创建一个场景(Scene)
   const scene = new THREE.Scene();
 
   // 创建一个包含盒子信息的立方几何体(BoxGeometry)
-  const boxWidth = 1;
-  const boxHeight = 1;
-  const boxDepth = 1;
-  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+  const geometry = new THREE.BoxGeometry(8, 8, 8);
+  const geometry1 = new THREE.BoxGeometry(8, 8, 8, 4, 4, 4);
+  const geometry2 = new THREE.CircleGeometry(8, 10, Math.PI * 0, Math.PI * 0.5);
+  const geometry3 = new THREE.ConeGeometry(5, 12, 10);
 
   // 创建一个基本的材质
   // const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 });
@@ -53,8 +53,9 @@ function main() {
 
   const cubes = [
     makeInstance(geometry, 0x44aa88, 0),
-    makeInstance(geometry, 0x8844aa, -2),
-    makeInstance(geometry, 0xaa8844, 2),
+    makeInstance(geometry1, 0x8844aa, -20),
+    makeInstance(geometry2, 0xaa8844, 20),
+    makeInstance(geometry3, 0xaa8844, 40),
   ];
 
   // 将网格添加到场景中
