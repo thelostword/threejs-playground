@@ -14,7 +14,7 @@
     "release": "release-it"
   },
   "dependencies": {
-    "@losting/ls": "^2.0.1",
+    "@losting/ls": "^3.0.0",
     "ahooks-vue": "^0.15.0",
     "axios": "^1.1.3",
     "lil-gui": "^0.17.0",
